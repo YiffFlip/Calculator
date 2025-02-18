@@ -120,7 +120,7 @@
                 android:backgroundTint="@color/gray"
                 android:text="6" />
             <Button
-                android:id="@+id/buDivide"
+                android:id="@+id/buDev"
                 android:layout_weight="1"
                 android:width="30pt"
                 android:height="30pt"
@@ -173,7 +173,7 @@
                 android:backgroundTint="@color/gray"
                 android:text="0" />
             <Button
-                android:id="@+id/buFraction"
+                android:id="@+id/buDot"
                 android:layout_weight="1"
                 android:width="30pt"
                 android:height="30pt"
