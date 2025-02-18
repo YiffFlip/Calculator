@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         // Инициализация текстового поля
         editText = findViewById(R.id.editText);
 
-
         // Инициализация кнопок
         Button buClear = findViewById(R.id.buClear);
         Button buPlusMinus = findViewById(R.id.buPlusMinus);
@@ -76,50 +75,60 @@ public class MainActivity extends AppCompatActivity {
         buMul.setOnClickListener(v -> handleOperator("*"));
         buDev.setOnClickListener(v -> handleOperator("/"));
         buEquals.setOnClickListener(v -> handleEquals());
-    }
 
-    private void setupKeyboardListener() {
         editText.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                handleKeyPress(keyCode); // Обрабатываем нажатие клавиши
+                handleKeyInput(keyCode, event);
                 return true;
             }
             return false;
         });
     }
 
-    private void handleKeyPress(int keyCode) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_0:
-            case KeyEvent.KEYCODE_NUMPAD_0:
-                handleNumberInput("0");
-                break;
-            case KeyEvent.KEYCODE_1:
-            case KeyEvent.KEYCODE_NUMPAD_1:
-                handleNumberInput("1");
-                break;
-            // Добавьте обработку остальных цифр аналогично
-            case KeyEvent.KEYCODE_PERIOD:
-            case KeyEvent.KEYCODE_NUMPAD_DOT:
-                handleDot();
-                break;
-            case KeyEvent.KEYCODE_ENTER:
-                handleEquals();
-                break;
-            case KeyEvent.KEYCODE_DEL:
-                handleDelete();
-                break;
-            // Добавьте обработку других клавиш (+, -, *, / и т.д.)
+    // Обработка нажатий клавиш клавиатуры
+    private void handleKeyInput(int keyCode, KeyEvent event) {
+        if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
+            String number = String.valueOf(event.getNumber());
+            handleDigitInput(number);
+        } else {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_PERIOD:
+                    handleDot();
+                    break;
+                case KeyEvent.KEYCODE_ENTER:
+                    handleEquals();
+                    break;
+                case KeyEvent.KEYCODE_DEL:
+                    handleDelete();
+                    break;
+                case KeyEvent.KEYCODE_PLUS:
+                    handleOperator("+");
+                    break;
+                case KeyEvent.KEYCODE_MINUS:
+                    handleOperator("-");
+                    break;
+                case KeyEvent.KEYCODE_STAR:
+                    handleOperator("*");
+                    break;
+                case KeyEvent.KEYCODE_SLASH:
+                    handleOperator("/");
+                    break;
+                case KeyEvent.KEYCODE_EQUALS:
+                    handleEquals();
+                    break;
+            }
         }
     }
-    private void handleNumberInput(String number) {
+
+    private void handleDigitInput(String digit) {
         if (isOperatorClicked) {
-            currentInput = ""; // Сбрасываем текущий ввод, если был нажат оператор
+            currentInput = "";
             isOperatorClicked = false;
         }
-        currentInput += number; // Добавляем цифру к текущему вводу
-        editText.setText(currentInput); // Обновляем поле ввода
+        currentInput += digit;
+        editText.setText(currentInput);
     }
+
 
     private void setButtonClickListeners(Button button, String number) {
         button.setOnClickListener(v -> {
