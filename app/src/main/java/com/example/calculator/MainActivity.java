@@ -153,6 +153,10 @@ public class MainActivity extends AppCompatActivity {
                         result = firstNumber / secondNumber;
                     } else {
                         editText.setText("Error");
+                        currentInput = "";
+                        operator = "";
+                        firstNumber = 0;
+                        isOperatorClicked = false;
                         return;
                     }
                     break;
