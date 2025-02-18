@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     private String operator = ""; // Оператор (+, -, *, /)
     private double firstNumber = 0; // Первое число для операции
     private boolean isOperatorClicked = false; // Флаг для отслеживания нажатия оператора
+
+    // Добавьте DecimalFormat для форматирования чисел
+    private DecimalFormat decimalFormat = new DecimalFormat("#.######");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
         if (!currentInput.isEmpty()) {
             double number = Double.parseDouble(currentInput);
             number = -number;
-            currentInput = String.valueOf(number);
+            // Форматируем результат
+            currentInput = decimalFormat.format(number);
             editText.setText(currentInput);
         }
     }
@@ -120,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
         if (!currentInput.isEmpty()) {
             double number = Double.parseDouble(currentInput);
             number = number / 100;
-            currentInput = String.valueOf(number);
+            // Форматируем результат
+            currentInput = decimalFormat.format(number);
             editText.setText(currentInput);
         }
     }
@@ -162,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
-            currentInput = String.valueOf(result);
+            // Форматируем результат с помощью DecimalFormat
+            currentInput = decimalFormat.format(result);
             editText.setText(currentInput);
             operator = "";
             isOperatorClicked = false;
