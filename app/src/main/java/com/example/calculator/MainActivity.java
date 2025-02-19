@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,13 +24,25 @@ public class MainActivity extends AppCompatActivity {
     // Добавьте DecimalFormat для форматирования чисел
     private DecimalFormat decimalFormat = new DecimalFormat("#.######");
 
+    // Добавляем SharedPreferences для сохранения результата
+    private SharedPreferences sharedPreferences;
+    private static final String PREFS_NAME = "CalculatorPrefs";
+    private static final String LAST_RESULT_KEY = "last_result";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Инициализация SharedPreferences
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
         // Инициализация текстового поля
         editText = findViewById(R.id.editText);
+
+        // Восстанавливаем последний результат при запуске
+        currentInput = sharedPreferences.getString(LAST_RESULT_KEY, "");
+        editText.setText(currentInput.isEmpty() ? "0" : currentInput);
 
         // Инициализация кнопок
         Button buClear = findViewById(R.id.buClear);
@@ -144,6 +157,14 @@ public class MainActivity extends AppCompatActivity {
             // Выполняем действие кнопки
             action.run();
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(LAST_RESULT_KEY, currentInput);
+        editor.apply();
     }
 
     private void handleDot() {
