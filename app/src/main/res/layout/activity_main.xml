@@ -26,6 +26,76 @@
 
         <TableRow>
             <Button
+                android:id="@+id/buSqrt"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="√" />
+            <Button
+                android:id="@+id/buSquare"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="x²" />
+            <Button
+                android:id="@+id/buPower"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="xⁿ" />
+            <Button
+                android:id="@+id/buLn"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="ln" />
+        </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/buSin"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="sin" />
+            <Button
+                android:id="@+id/buCos"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="cos" />
+            <Button
+                android:id="@+id/buTan"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="tan" />
+            <Button
+                android:id="@+id/buLog"
+                android:layout_weight="1"
+                android:width="30pt"
+                android:height="30pt"
+                android:layout_marginRight="1pt"
+                android:backgroundTint="@color/gray"
+                android:text="log" />
+        </TableRow>
+
+        <TableRow>
+            <Button
                 android:id="@+id/buClear"
                 android:layout_weight="1"
                 android:width="30pt"
