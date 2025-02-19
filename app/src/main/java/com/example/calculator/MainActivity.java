@@ -1,13 +1,15 @@
 package com.example.calculator;
 
-import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,27 +56,27 @@ public class MainActivity extends AppCompatActivity {
         Button bu9 = findViewById(R.id.bu9);
 
         // Установка обработчиков событий
-        setButtonClickListeners(bu0, "0");
-        setButtonClickListeners(bu1, "1");
-        setButtonClickListeners(bu2, "2");
-        setButtonClickListeners(bu3, "3");
-        setButtonClickListeners(bu4, "4");
-        setButtonClickListeners(bu5, "5");
-        setButtonClickListeners(bu6, "6");
-        setButtonClickListeners(bu7, "7");
-        setButtonClickListeners(bu8, "8");
-        setButtonClickListeners(bu9, "9");
+        setupButtonWithAnimation(bu0,  () -> handleDigitInput("0"));
+        setupButtonWithAnimation(bu1,  () -> handleDigitInput("1"));
+        setupButtonWithAnimation(bu2,  () -> handleDigitInput("2"));
+        setupButtonWithAnimation(bu3,  () -> handleDigitInput("3"));
+        setupButtonWithAnimation(bu4,  () -> handleDigitInput("4"));
+        setupButtonWithAnimation(bu5,  () -> handleDigitInput("5"));
+        setupButtonWithAnimation(bu6,  () -> handleDigitInput("6"));
+        setupButtonWithAnimation(bu7,  () -> handleDigitInput("7"));
+        setupButtonWithAnimation(bu8,  () -> handleDigitInput("8"));
+        setupButtonWithAnimation(bu9,  () -> handleDigitInput("9"));
 
-        buDot.setOnClickListener(v -> handleDot());
-        buClear.setOnClickListener(v -> handleClear());
-        buDelete.setOnClickListener(v -> handleDelete());
-        buPlusMinus.setOnClickListener(v -> handlePlusMinus());
-        buPercent.setOnClickListener(v -> handlePercent());
-        buPlus.setOnClickListener(v -> handleOperator("+"));
-        buMinus.setOnClickListener(v -> handleOperator("-"));
-        buMul.setOnClickListener(v -> handleOperator("*"));
-        buDev.setOnClickListener(v -> handleOperator("/"));
-        buEquals.setOnClickListener(v -> handleEquals());
+        setupButtonWithAnimation(buClear, this::handleClear);
+        setupButtonWithAnimation(buPlusMinus, this::handlePlusMinus);
+        setupButtonWithAnimation(buPercent, this::handlePercent);
+        setupButtonWithAnimation(buDelete, this::handleDelete);
+        setupButtonWithAnimation(buEquals, this::handleEquals);
+        setupButtonWithAnimation(buPlus, () -> handleOperator("+"));
+        setupButtonWithAnimation(buMinus, () -> handleOperator("-"));
+        setupButtonWithAnimation(buMul, () -> handleOperator("*"));
+        setupButtonWithAnimation(buDev, () -> handleOperator("/"));
+        setupButtonWithAnimation(buDot, this::handleDot);
 
         editText.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -129,15 +131,18 @@ public class MainActivity extends AppCompatActivity {
         editText.setText(currentInput);
     }
 
-
-    private void setButtonClickListeners(Button button, String number) {
+    private void setupButtonWithAnimation(Button button, Runnable action) {
         button.setOnClickListener(v -> {
-            if (isOperatorClicked) {
-                currentInput = "";
-                isOperatorClicked = false;
-            }
-            currentInput += number;
-            editText.setText(currentInput);
+            // Анимация цвета
+            int normalColor = ContextCompat.getColor(this, R.color.gray);
+            int pressedColor = ContextCompat.getColor(this, R.color.black);
+
+            button.setBackgroundTintList(ColorStateList.valueOf(pressedColor));
+            new Handler(Looper.getMainLooper()).postDelayed(() ->
+                    button.setBackgroundTintList(ColorStateList.valueOf(normalColor)), 100);
+
+            // Выполняем действие кнопки
+            action.run();
         });
     }
 
